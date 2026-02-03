@@ -426,30 +426,34 @@ If **Q23 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 ### Q28: Sudden Drop / Slide
 - **Category:** Risk Penalty
-- **Max:** 0 / **Min:** -3
-- **Logic:** Check for abnormal price drops. Triggered if EITHER condition is true (no stacking — max penalty is -3):
-  - **Condition A (Single-Day Shock):** Any ONE of the last 3 trading days individually shows a price drop of ≥7%. Each day is evaluated separately (close-to-close). A 7% collective drop over 2-3 days does NOT trigger this — it must be a single day's move.
-  - **Condition B (5-Day Slide):** The cumulative 5-trading-day return is ≤ -10%.
-- **Conditions:**
-  - Either A or B true: **-3**
-  - Neither true: **0**
-- **Data Source:** Historical daily prices (last 5 trading days, close prices)
-- **Self-Healing:** Condition A clears once the drop day falls outside the 3-day lookback window. If the decline continues, Condition B sustains the penalty.
-- **Rationale:** A sudden large drop signals unknown negative information the score hasn't captured yet. Penalize to encourage waiting for clarity.
+- **Max:** 0 / **Min:** -10
+- **Logic:** Check for abnormal price drops. Evaluate each of the last 3 trading days individually (close-to-close). Also check cumulative 5-day return. Triggered by the HIGHEST matching tier only (no stacking):
 
+  | Tier | Condition | Penalty |
+  |------|-----------|---------|
+  | Critical | Any single day ≥ 15% drop within last 3 days | -10 |
+  | Severe | Any single day ≥ 10% drop within last 3 days | -5 |
+  | Caution | Any single day ≥ 7% drop within last 3 days, OR cumulative 5-day return ≤ -10% | -3 |
+  | None | No conditions met | 0 |
+
+- **Data Source:** Historical daily prices (last 5 trading days, close prices)
+- **Self-Healing:** Clears once the drop day falls outside the 3-day window. If decline continues, the 5-day cumulative condition sustains the Caution tier.
+- **Rationale:** Tiered response to abnormal drops. 7%+ warrants caution. 10%+ signals something significant. 15%+ is catastrophic — effectively makes the stock untradeable by score alone.
+
+- 
 ---
 ## Final Score Calculation
 - **Raw Score** = Sum of assigned points from all questions
 
 **Current Config Reference (V13):**
 - **Max Raw Score:** 70 points
-- **Min Raw Score:** -35 points
+- **Min Raw Score:** -38 points
 - **Span:** 105 points
 
 **Normalization Formula (auto-calculated from config):**
 `((Raw Score - Min) / (Max - Min)) × 100`
 
-*Current equivalent:* `((Raw Score + 35) / 105) × 100`
+*Current equivalent:* `((Raw Score + 38) / 105) × 100`
 
 
 ---
