@@ -438,16 +438,18 @@ If **Q23 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 - **Rationale:** A sudden large drop signals unknown negative information the score hasn't captured yet. Penalize to encourage waiting for clarity.
 
 ---
-
 ## Final Score Calculation
-
 - **Raw Score** = Sum of assigned points from all questions
 
-**V13 Score Ranges:**
+**Current Config Reference (V13):**
 - **Max Raw Score:** 70 points
 - **Min Raw Score:** -35 points
+- **Span:** 105 points
 
-**Normalization Formula:** `((Raw Score + 35) / 99) × 100`
+**Normalization Formula (auto-calculated from config):**
+`((Raw Score - Min) / (Max - Min)) × 100`
+
+*Current equivalent:* `((Raw Score + 35) / 105) × 100`
 
 
 ---
