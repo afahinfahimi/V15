@@ -1,4 +1,5 @@
 # STOCK ANALYZER & BACKTESTING APP — REPLIT BUILD PROMPT
+Updated Feb 2, 2026
 
 > **Purpose:** Complete build specification for an AI agent (Replit) to construct from scratch.
 > Every detail needed to build the app is in this document.
@@ -17,7 +18,7 @@
 7. [Data Layer & FMP API](#7-data-layer--fmp-api)
 8. [Configuration System](#8-configuration-system)
 9. [Scoring Engine (Layer 1)](#9-scoring-engine)
-10. [Tags & Alerts (Layer 2)](#10-tags--alerts)
+10. [Tags (Layer 2)](#10-tags)
 11. [AI Assessment (Layer 2)](#11-ai-assessment)
 12. [Live Analyzer Dashboard](#12-live-analyzer-dashboard)
 13. [AI Chat Assistant](#13-ai-chat-assistant)
@@ -37,7 +38,7 @@ Build a full-stack stock analysis, market scoring, and backtesting application. 
 
 **Primary Goal:** Backtesting and optimization — find the best correlation between scores and forward price movement for swing trading (1-month hold target).
 
-**Secondary Goal:** Live analysis dashboard for daily trading decisions.
+**Secondary Goal:** Live analysis dashboard for daily trading decisions. The app's purpose is not limited to a single time horizon — the primary backtest target is 1-month swing trades, but the broader goal is identifying good stocks for investment. If backtesting or AI chat analysis reveals strong predictive accuracy over longer hold periods (3M, 6M+), that insight is within scope and should be explored.
 
 ## Core Concept
 
@@ -90,7 +91,7 @@ The entire system is organized into three strictly separated layers. This separa
 **Key rule:** Signals come from MS ONLY. SA and MC do not issue their own trading signals — they provide quality scores that feed into MS.
 
 **What lives here:**
-- MS Signals: BUY, SELECTIVE BUY, NO NEW BUYS, PANIC, AVOID, VIX OVERRIDE (from Zone Table)
+- MS Signals: BUY, LEAN BUY, HOLD, LEAN SELL, SELL, SELECTIVE BUY, NO NEW BUYS, PANIC, AVOID, VIX OVERRIDE
 - Tiers: T1/T2/T3/S — position sizing based on SA + fundamentals
 - Cash allocation: Driven by MC score range + VIX
 - Entry/Exit rules: Zone Table conditions, stop losses, profit targets
@@ -1479,7 +1480,7 @@ Users can apply manual point adjustments to any stock or symbol, either permanen
 
 **Q18: Deterioration Risk** — Max: 0 / Min: -3
 - Trigger: Q Revenue < q-4 AND Q OpIncome < q-4 AND Q OpCF < q-4
-- Combined Cap: If both Q17+Q18 trigger, total = -5 (not -6)
+- Combined Cap: If both Q17+Q18 trigger, total = -4 (not -6)
 
 **Q19: Trend Consistency** — Max: 3 / Min: 0
 - Both 3M and 52W positive: 3 | One positive: 1 | Both negative: 0
@@ -1509,12 +1510,12 @@ Users can apply manual point adjustments to any stock or symbol, either permanen
 - Accelerating: 3M > 0 AND (3M × 4) > 52W → +1
 - Other: 0
 
-**Q25: High P/E Momentum Trap** — Max: 0 / Min: -5
-- Trigger: P/E > 50 AND 10D < -5% → -5
+**Q25: High P/E Momentum Trap** — Max: 0 / Min: -4
+- Trigger: P/E > 50 AND 10D < -5% → -4
 
-**Q26: Biotech Binary Event Burn** — Volatility Cap
+**Q26: Biotech Binary Event Burn** — Max: 0 / Min: -3
 - Applies to: Healthcare (Biotech, Medical Devices, Drug Manufacturers)
-- Trigger: 10D > 15% → Override normalized score to max 55
+- Trigger: 10D > 15% → -3
 
 **Q27: Sustained Downtrend** — Max: 0 / Min: -3
 - Check 1D, 5D, and 1M price changes
@@ -1522,24 +1523,23 @@ Users can apply manual point adjustments to any stock or symbol, either permanen
 - Otherwise: **0**
 - Rationale: No positive momentum at any timeframe. Wait for reversal before entering.
 
-**Q28: Sudden Drop / Slide** — Max: 0 / Min: -10
+**Q28: Sudden Drop / Slide** — Max: 0 / Min: -6
 - Evaluate each of the last 3 trading days individually (close-to-close). Also check cumulative 5-day return. Highest matching tier only (no stacking):
 
 | Tier | Condition | Penalty |
 |------|-----------|---------|
-| Critical | Any single day ≥ 15% drop within last 3 days | -10 |
-| Severe | Any single day ≥ 10% drop within last 3 days | -5 |
-| Caution | Any single day ≥ 7% drop within last 3 days, OR cumulative 5-day return ≤ -10% | -3 |
+| Critical | Any single day ≥ 15% drop within last 3 days | -6 |
+| Severe | Any single day ≥ 10% drop within last 3 days | -2 |
+| Caution | Any single day ≥ 7% drop within last 3 days, OR cumulative 5-day return ≤ -10% | -1 |
 | None | No conditions met | 0 |
 
 - Self-Healing: Clears once the drop day falls outside the 3-day window. If decline continues, the 5-day cumulative condition sustains the Caution tier.
 - Rationale: Tiered response to abnormal drops. 15%+ effectively makes the stock untradeable by score alone.
 
-**Q29: Short Interest Risk** — Max: 0 / Min: -2
+**Q29: Short Interest Risk** — Max: 0 / Min: -1
 - High short interest amplifies volatility in both directions.
   | Short % Float | Penalty |
   |---------------|---------|
-  | > 30% | -2 |
   | > 20% | -1 |
   | ≤ 20% | 0 |
 - Data Source: FMP short interest endpoint
@@ -1570,186 +1570,189 @@ Same as MC: auto-calculated from the config on every save/deploy.
 2. Sums all SA question min points (including penalties) → **Min Raw**
 3. Applies: `((Raw Score - Min) / (Max - Min)) × 100`
 
-*Reference values (current config):* Raw range approximately -42 to +71, span ~113. These will change if questions are added/removed.
+*Reference values (current config):* Raw range approximately -41 to +71, span ~112. These will change if questions are added/removed.
 
 ---
 
-## 3C. Master Score (MS) — Configurable Formulas (Layer 1 Scores + Layer 3 Decisions)
+## 3C. Master Score (MS) — Layer 1 Scores + Layer 3 Decisions
 
-The MS combines SA and MC into trading signals. **Formulas are defined in the `master-score.md` config file** and can be modified, tested, and optimized like any other config.
+By the time MS is evaluated, SA (stock score) and MC (market score) are already calculated. MS combines them into trading decisions through three layers, evaluated in priority order:
 
-### Formula Definitions (in config)
+1. **Overrides** — MC or VIX conditions that bypass everything else
+2. **Zone Table** — SA + MC rules that don't require calculating MS
+3. **MS Formulas** — Calculated score with signals and modifiers
 
-```markdown
-## Formulas
+### 1. Overrides
 
-### Formula A (User)
-Expression: (SA + (3 * MC)) / 4
-Label: MS
-Description: Weighted average favoring market conditions
+Evaluate first. If triggered, skip everything below.
 
-### Formula B (Contrarian)
-Expression: SA + 0.75 * (100 - MC)
-Label: C
-Description: Rewards buying quality during fear
+| Condition | Signal | Action |
+|-----------|--------|--------|
+| VIX ≥ 28 | 🚨 VIX OVERRIDE | Buy QQQ immediately. Ignore SA scores. Fixed position: 50% of T1 max. |
+| MC < 20 | 🛑 PANIC | Stand down. All cash. SA unreliable. |
+
+### 2. Zone Table (SA + MC Direct Rules)
+
+No MS calculation needed. Evaluate in priority order. Stop at first match.
+
+| Priority | Condition | Signal | Action |
+|----------|-----------|--------|--------|
+| 1 | MC 20-29 + SA ≥ 55 | 🟢 BUY | Fear. Aggressive buy opportunity. |
+| 2 | MC 30-39 + SA ≥ 55 | 🟢 BUY | Oversold. Buy qualifying stocks. |
+| 3 | MC 40-49 + SA ≥ 55 | 🟢 BUY | Cautious. Buy qualifying stocks. |
+| 4 | MC 50-59 + SA ≥ 65 | 🟡 SELECTIVE BUY | Neutral. Only strong stocks. |
+| 5 | MC 60-74 | ⛔ NO NEW BUYS | Overheated. Tighten stops. |
+| 6 | MC ≥ 75 | ⛔ NO NEW BUYS | Euphoria. Take profits. |
+
+**When multiple stocks qualify:** Use MS Standard to rank. Buy highest MS first.
+
+**Note:** MC alone is sufficient for QQQ decisions. If MC signals BUY and you're buying QQQ (not individual stocks), SA is not required.
+
+### 3. MS Formulas
+
+Calculate MS after overrides and zone table are checked. Two formulas run simultaneously for comparison and optimization.
+
+**MS Standard:**
 ```
-
-The user can:
-- **Edit formulas** in the config using SA and MC as variables, plus constants
-- **Add new formulas** — the engine parses any valid math expression using SA and MC
-- **Add penalties/bonuses** to formulas: e.g., `(SA + 3*MC) / 4 - 5` when VIX > 30
-- **Test formulas** using the Draft → Test → Deploy workflow. Backtest shows all formula results side by side.
-- **Select which formula to optimize against** in the Optimization Engine — dropdown to pick "MS-A", "MS-C", or any custom formula
-
-### Formula Testing in Optimization
-The optimizer can run correlation analysis against any selected formula:
-- "Which formula has the best correlation with 1M forward returns?"
-- Side-by-side comparison: Formula A win rate vs Formula B win rate vs any custom
-- The AI chat can discuss formula performance and suggest modifications
-
-### Conditional Modifiers (in config)
-Formulas can include conditional bonuses/penalties:
-```markdown
-## MS Modifiers
-| Condition | Modifier | Applies To |
-|-----------|----------|------------|
-| VIX > 30 | -5 | All formulas |
-| SA Q23 = Breakout AND MC < 60 | -3 | All formulas |
-| SA > 70 AND MC < 30 | +10 | Formula B only |
-| MC > 75 | -3 | All formulas |
+MS = (MC + 3 × SA) / 4
 ```
+- Purpose: SA-weighted quality score. Higher = better overall stock + market combination.
+- Rounded to whole number.
 
-### Portfolio Concentration Limits
-Enforced at the decision layer — does not affect scores, but the dashboard warns when limits are reached.
-```markdown
-## Portfolio Rules
-| Sector Group | Max Positions |
-|-------------|---------------|
-| Pharma/Medical | 2 |
-| Crypto | 2 |
-| Mining/Commodities | 2 |
-| Oil/Gas/Energy | 2 |
+**MS Standard Signals:**
+
+| MS Range | Signal |
+|----------|--------|
+| ≥ 70 | BUY |
+| 60-69 | LEAN BUY |
+| 50-59 | HOLD |
+| 40-49 | LEAN SELL |
+| < 40 | SELL |
+
+**MS Contrarian (Display Only):**
 ```
-When a sector limit is reached, additional stocks in that sector show "⚠️ Sector limit reached" in the Alerts column regardless of score.
-
-All active formulas run simultaneously for comparison and optimization.
-
-### Formula A (User) — Displayed first
+MS = SA + 0.75 × (100 - MC)
 ```
-MS-A = (SA + (3 × MC)) / 4
-```
-Range: 0-100. Weighted average favoring market conditions.
+- Purpose: Alternative ranking view. Rewards buying quality stocks during market fear.
+- NOT used for signals. Displayed for comparison only.
 
-### Formula B (Contrarian) — Displayed as "C:"
-```
-MS-C = SA + 0.75 × (100 - MC)
-```
-Range: 0-175. Rewards buying quality stocks during fear.
+| SA | MC | Standard | Contrarian | Interpretation |
+|----|----|----|------|----------------|
+| 80 | 30 | 68 | 133 | Great stock + fear |
+| 80 | 50 | 73 | 118 | Great stock + neutral |
+| 80 | 75 | 79 | 99 | Great stock + hot market |
+| 65 | 30 | 56 | 118 | Good stock + fear |
+| 50 | 30 | 45 | 103 | Average stock + fear |
 
-### Display Format (everywhere MS appears)
-```
-MS: 68
-C: 117.5
-```
+### 4. MS Modifiers
 
-### Entry Rules (Zone Table)
+Applied to the MS Standard score after calculation, before signals are read.
 
-| Priority | Condition | Signal |
-|----------|-----------|--------|
-| 1 | VIX ≥ 28 | 🚨 VIX OVERRIDE — Buy QQQ, 50% T1 |
-| 2 | MC < 20 | 🛑 PANIC — All cash |
-| 3 | MC 20-29 + SA ≥ 55 | 🟢 BUY |
-| 4 | MC 30-39 + SA ≥ 55 | 🟢 BUY |
-| 5 | MC 40-49 + SA ≥ 55 | 🟢 BUY |
-| 6 | MC 50-59 + SA ≥ 65 | 🟡 SELECTIVE BUY |
-| 7 | MC 60-74 | ⛔ NO NEW BUYS |
-| 8 | MC ≥ 75 | ⛔ NO NEW BUYS |
+| Condition | Modifier |
+|-----------|----------|
+| MC < 30 | +5 |
+| MC 30-49 | +3 |
+| MC 50-59 | +1 |
+| MC ≥ 60 | 0 |
+| SA Q23 = Breakout AND MC < 60 | -3 |
 
-### Exit Rules
+**Example:** SA = 65, MC = 35 → Raw MS = (35 + 195) / 4 = 58 → +3 modifier → **MS = 61 (LEAN BUY)**
+
+### 5. Exit Rules
+
+Evaluate in priority order. Stop at first match.
 
 | Priority | Condition | Action |
 |----------|-----------|--------|
-| 1 | VIX < 18 + QQQ profit > 10% | Exit VIX Override |
-| 2 | Down -20% from entry | Emergency stop |
-| 3 | SA < 45 + down > 15% | Sell |
-| 4 | +20% T1 / +25% T2 / +30% T3 | Sell 50% |
-| 5 | 60 days + SA < 55 | Sell |
-| 6 | Under 20 days held | Don't exit |
+| 1 | VIX < 18 + QQQ profit > 10% | Exit VIX Override QQQ position only |
+| 2 | Down -20% from entry | Sell — emergency stop loss |
+| 3 | SA < 45 + down > 15% | Sell — deteriorating quality |
+| 4 | +20% T1 / +25% T2 / +30% T3 | Sell 50%, let rest run |
+| 5 | 60 days held + SA < 55 | Sell — re-evaluation failed |
+| 6 | Under 20 days held | Don't exit even if down |
 
-### Tiers
+### 6. Position Sizing
+
+**Tier Limits (Max Position per Stock):**
 
 | Tier | Criteria | Max Position |
 |------|----------|-------------|
-| T1 | SA ≥ 55 + Profitable + MCap > $50B | $100,000 |
-| T2 | SA ≥ 50 + Profitable + MCap > $2B | $50,000 |
-| T3 | SA ≥ 50 + MCap > $100M + (growth OR small profitable) | $20,000 |
-| SELL | None qualify | $0 |
+| T1 | SA ≥ 55 + Profitable + Market Cap > $50B | $100,000 |
+| T2 | SA ≥ 50 + Profitable + Market Cap > $2B | $50,000 |
+| T3 | SA ≥ 50 + Market Cap > $100M + (growth OR small profitable) | $20,000 |
+| SELL | Does not qualify for any tier | $0 — Do not buy |
 
-### VIX Position Adjustment
-- VIX < 18: 100% | 18-25: 75% | 25-35: 50% | ≥ 35: No new buys (except Override)
+**T3 Qualification Path A (Unprofitable Growth):**
+- Unprofitable with at least 2 of 3 growth questions scoring ≥1 pt (Q1, Q2, Q3)
 
-### Vetoes → AVOID
+**T3 Qualification Path B (Small Profitable):**
+- Profitable with Market Cap $100M–$2B
 
-**SA:** V1: Biotech+10D>15% → Cap 55 | V2: P/E>50+10D<-5% | V3: Unprofitable+NegOCF+MCap<$10B | V4: Rev+OpInc+OCF all declining QoQ | V5: 52W>40%+3M<-5%
-**MC:** V1: VIX>35 → Cap MC 30 | V2: QQQ 52W<-30% → Cap MC 20 | V3: QQQ below both MAs+VIX>30 → PANIC
+**Tier Precedence:** If a stock qualifies for multiple tiers, assign the highest tier.
+
+**Note:** Tiers are risk caps, not quality rankings. Score determines quality; tier determines maximum position size based on risk profile.
+
+**Portfolio Concentration Limits:**
+Max 2 positions per restricted sector: Pharma/Medical, Crypto, Mining/Commodities, Oil/Gas/Energy
+
+### 7. Vetoes → AVOID
+
+Vetoes override all signals. If any veto triggers, the signal becomes AVOID regardless of scores.
+
+**SA Vetoes:**
+- V1: Biotech + 10D > 15% → Cap 55
+- V2: P/E > 50 + 10D < -5% → AVOID
+- V3: Unprofitable + Neg OCF + MCap < $10B → AVOID
+- V4: Rev + OpInc + OCF all declining QoQ → AVOID
+- V5: 52W > 40% + 3M < -5% → AVOID
+
+**MC Vetoes:**
+- V1: VIX > 35 → Cap MC 30
+- V2: QQQ 52W < -30% → Cap MC 20
+- V3: QQQ below both MAs + VIX > 30 → PANIC
 
 ---
 
-# 10. TAGS & ALERTS (Layer 2: Assessment)
+# 10. TAGS (Layer 2: Assessment)
 
-Non-scoring visual indicators providing context beyond SA/MC scores. Part of the Assessment layer — informs human judgment without modifying scores. See Three-Layer Framework in Section 1.
+Tags are **non-scoring** visual indicators that provide context beyond SA/MC scores. They do not modify scores. They surface on the Analyzer table, stock detail cards, and alert panels. Source from API when available; Yahoo Finance, Google Finance, and web search as supplementary sources. See Three-Layer Framework in Section 1.
 
-## Kill Switches (Immediate Action)
-| Flag | Icon | Trigger |
-|------|------|---------|
-| SEC/Fraud | 🚨 | Active investigation, fraud, restatement |
+> **Note:** Previous versions used separate Alerts, Flags, and Kill Switches. All have been consolidated into this unified Tags system (V13). Data-driven flags (Downtrend, Volatility, Short Squeeze, Low Float, Sector Lag) were moved into SA as scored questions (Q27-Q31). Mean Reversion moved to MS modifiers.
 
-## Risk Tags
-| Tag Text | Trigger |
-|----------|---------|
-| Earnings Soon | Earnings within 14 days |
+## Red Tags (Negative / Risk)
+| Tag | Trigger |
+|-----|---------|
+| SEC | Active SEC investigation, fraud, restatement (Kill Switch) |
+| Court | Lawsuit, hearing, investigation, ruling |
+| Guide ↓ | Forward guidance lowered |
+| EPS ↓ | Consensus EPS estimates cut > 5% (90d) |
+| Downgrade | Net analyst downgrades last 30 days |
+| Insider ↓ | Net insider selling 6 months |
 
-> **Note:** Downtrend, Volatility, Critical Volatility, Short Squeeze, Low Float, and Sector Lag have been moved into SA as scored questions (Q27-Q31). They are data-driven and reproducible, so they belong in the scoring layer for backtesting and optimization. Sector flags removed — handled by Q22/Q26 and MS Portfolio Rules. Mean Reversion moved to MS modifiers.
-
-## Opportunity Tags
-| Tag Text | Trigger |
-|----------|---------|
-| Bounce Play | SA < 35 AND 1M < -15% |
-| Momentum Spec | SA < 35 AND 1M > +15% |
-| Turtle | 52W ±10% AND 1M ±10% |
-| Lottery | SA < 35 AND MCap < $500M |
+## Yellow Tags (Caution / Neutral)
+| Tag | Trigger |
+|-----|---------|
+| Earning | Earnings within 14 days |
 | IPO | Listed < 12 months |
+| Turtle | 52W ±10% AND 1M ±10% |
+| Lotto | SA < 35 AND MCap < $500M |
 
-## Fundamental Tags
-| Tag Text | Trigger |
-|----------|---------|
-| Guidance ↑ | Forward guidance raised |
-| Guidance ↓ | Forward guidance lowered |
-| EPS Rev ↑ | Consensus EPS estimates raised > 5% (90d) |
-| EPS Rev ↓ | Consensus EPS estimates cut > 5% (90d) |
-| Upgraded | Net analyst upgrades last 30 days |
-| Downgraded | Net analyst downgrades last 30 days |
-| Insider + | Net insider buying 6 months |
-| Insider - | Net insider selling 6 months |
+## Green Tags (Positive / Opportunity)
+| Tag | Trigger |
+|-----|---------|
+| Bounce | SA < 35 AND 1M < -15% |
+| Jump | SA < 35 AND 1M > +15% |
+| Guide ↑ | Forward guidance raised |
+| EPS ↑ | Consensus EPS estimates raised > 5% (90d) |
+| Upgrade | Net analyst upgrades last 30 days |
+| Insider ↑ | Net insider buying 6 months |
 
-## Event Tags
-Specific event type shown as individual tags:
-| Tag Text | Trigger |
-|----------|---------|
-| Ruling | Pending court ruling |
-| Investigate | Active investigation (non-SEC) |
-| Hearing | Congressional/regulatory hearing |
-| Lawsuit | Active lawsuit |
-| Fraud | Fraud allegation (also triggers Kill Switch) |
-
-## Tag Display
-- Tags are shown as small text buttons/pills in the **Tags column** (last column before checkboxes)
+## Tag Display Rules
+- Tags shown as small text pill buttons in the **Tags column** (last column before checkboxes)
 - Clicking any tag opens a toggle panel showing all active tags with one-line explanations
-- Tags are colored by category: Risk (Red-L), Opportunity (Green-L), Fundamental (Blue-L), Event (Orange-L)
+- Tag colors by category: Risk (Red-L), Opportunity (Green-L), Fundamental (Blue-L), Event (Orange-L)
 - Max ~3 tags visible in column, "+N" overflow for additional
-
-## Display Order in Tags Column
-Kill Switch → Event → Risk → Fundamental → Opportunity
+- Display priority: Kill Switch → Event → Risk → Fundamental → Opportunity
 
 ---
 
