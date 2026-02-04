@@ -215,6 +215,7 @@ If **Q23 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 ### EPS Growth
 
 **Q12: EPS Growth Prior Year**
+- Field: EPS Growth % (Prior Fiscal Year)
 - EPS Growth % (Prior Fiscal Year)
 - Max Points: 4
 - Min Point: 0
@@ -298,11 +299,12 @@ If **Q23 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 **Q18: Deterioration Risk**
 - Fields: Quarterly Revenue, Quarterly Operating Income, Quarterly Operating Cash Flow (vs Same Qtr Year Ago)
-- Trigger: Quarterly Revenue < Sales(q-4) AND Quarterly Operating Income < OpIncome(q-4) AND Quarterly Operating Cash Flow < CashFlow(q-4)
 - Max Points: 0
 - Min Point: -3
+- Trigger: Quarterly Revenue < Sales(q-4) AND Quarterly Operating Income < OpIncome(q-4) AND Quarterly Operating Cash Flow < CashFlow(q-4)
+- Points: -3
 
-**Combined Penalty Cap:** If both questions trigger, apply -5 total (not cumulative)
+**Combined Penalty Cap:** If both questions trigger, apply -4 total (not cumulative)
 
 ---
 
@@ -337,9 +339,11 @@ If **Q23 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 **Q21: Momentum Divergence Penalty**
 - Fields: 52-Week Price Change %, 3-Month Price Change %
-- Trigger: 52-Week Price Change % >40% AND 3-Month Price Change % <-5%
 - Max Points: 0
 - Min Point: -10
+- Trigger: 52-Week Price Change % >40% AND 3-Month Price Change % <-5%
+- Points: -10
+
 
 **Q22: Sector Preference**
 - Field: Sector (GICS)
