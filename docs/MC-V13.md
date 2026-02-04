@@ -185,7 +185,7 @@ The app must calculate these values using the API data:
 - -1: Spread -2% to -1% (Hawkish lean)
 - -3: Spread < -2% (Hawkish / Rates Rising)
 
-- **Q12: Unemployment Trend (XLI Momentum)**
+**Q12: Unemployment Trend (XLI Momentum)**
 
 - Max: +2 / Min: -2
 - Field: XLI 1-Month Price Change %
@@ -315,7 +315,7 @@ Apply after base score calculation.
 | ID | Modifier | Points | Trigger |
 |----|----------|--------|---------|
 | M1 | Euphoria Penalty | -5 | QQQ RSI > 75 (Extreme Overbought) |
-| M2 | Breadth Divergence | +(Breadth Score) | QQQ Price > 50SMA BUT Breadth Section Score is Negative (Market rising on few stocks) |
+| M2 | Breadth Divergence | Add Breadth Section total again (doubles breadth penalty) | QQQ Price > 50SMA AND Breadth Section Score < 0 |
 | M3 | VIX Divergence | -5 | QQQ Price Up > 1% AND VIX Up > 5% (Fear rising with price) |
 | M4 | Yield Curve Risk | -3 | Yield Spread < -0.8% AND QQQ RSI > 70 (ignoring recession risk) |
 | M5 | Momentum Fatigue | -3 | MACD Histogram < 0 (Negative) AND QQQ Price > 50SMA (Momentum slowing while price is high) |
@@ -323,11 +323,14 @@ Apply after base score calculation.
 ---
 
 ## Updated Normalization Formula
-*Since the raw score range has changed, update your code's normalization logic:*
 
 * **Raw Range:** -93 to +65
-* **Total Span:** 161 points
-* **Formula:** `((Raw Score + 93) / 158) * 100`
+* **Total Span:** 158 points
+
+**Normalization Formula (auto-calculated from config):**
+`((Raw Score - Min) / (Max - Min)) × 100`
+
+*Current equivalent:* `((Raw Score + 93) / 158) * 100`
 
 ---
 
