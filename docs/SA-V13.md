@@ -398,42 +398,41 @@ If **Q23 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q25: High P/E Momentum Trap**
 - Fields: P/E Ratio (TTM), 10-Day Price Change %
 - Max Points: 0
-- Min Point: -5
+- Min Point: -4
 - Trigger: P/E Ratio (TTM) > 50 AND 10-Day Price Change < -5%
-- Points: -5
+- Points: -4
 
 ---
 
-**Q26: The "Biotech Binary Event Burn" Volatility Cap**
+**Q26: Biotech Binary Event Burn** — Max: 0 / Min: -3
 - Fields: Sector, 10-Day Price Change %
-- **Applies To:** Healthcare Sector (Biotechnology, Medical Devices, Drug Manufacturers)
-- **Trigger:** 10-Day Price Change > 15%
-- **Action:** Override Total Score to **maximum 55 (Normalized)** regardless of other points.
+- Applies to: Healthcare (Biotech, Medical Devices, Drug Manufacturers)
+- Trigger: 10D > 15% → Deduct -3 points
 
 ---
 
 ### Q27: Sustained Downtrend
-- **Category:** Risk Penalty
+- Fields: 1-Day Price Change %, 5-Day Price Change %, 1-Month Price Change %
 - **Max:** 0 / **Min:** -3
 - **Logic:** Check 1D, 5D, and 1M price changes. If ALL THREE are negative, deduct -3 points.
 - **Conditions:**
   - 1D < 0% AND 5D < 0% AND 1M < 0%: **-3**
   - Otherwise: **0**
-- **Data Source:** Quote endpoint (price changes)
-- **Rationale:** A stock showing red across all three durations has no positive momentum at any timeframe. Wait for at least one reversal signal before entering, even if fundamentals score high.
+ 
 
 ---
 
 ### Q28: Sudden Drop / Slide
+- Fields: Historical Daily Close Prices (last 5 trading days)
 - **Category:** Risk Penalty
-- **Max:** 0 / **Min:** -10
+- **Max:** 0 / **Min:** -6
 - **Logic:** Check for abnormal price drops. Evaluate each of the last 3 trading days individually (close-to-close). Also check cumulative 5-day return. Triggered by the HIGHEST matching tier only (no stacking):
 
   | Tier | Condition | Penalty |
   |------|-----------|---------|
-  | Critical | Any single day ≥ 15% drop within last 3 days | -10 |
-  | Severe | Any single day ≥ 10% drop within last 3 days | -5 |
-  | Caution | Any single day ≥ 7% drop within last 3 days, OR cumulative 5-day return ≤ -10% | -3 |
+  | Critical | Any single day ≥ 15% drop within last 3 days | -6 |
+  | Severe | Any single day ≥ 10% drop within last 3 days | -2 |
+  | Caution | Any single day ≥ 7% drop within last 3 days, OR cumulative 5-day return ≤ -10% | -1 |
   | None | No conditions met | 0 |
 
 - **Data Source:** Historical daily prices (last 5 trading days, close prices)
@@ -443,20 +442,22 @@ If **Q23 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 ---
 
 ### Q29: Short Interest Risk
+- Fields: Short % of Float
 - Category: Risk Penalty
-- Max: 0 / Min: -3
+- Max: 0 / Min: -1
 - Logic: High short interest amplifies volatility in both directions.
   | Short % Float | Penalty |
   |---------------|---------|
-  | > 30% | -2 |
   | > 20% | -1 |
   | ≤ 20% | 0 |
+
 - Data Source: FMP institutional/short interest endpoint
 - Rationale: Heavily shorted stocks have unpredictable, amplified moves. For 1-month swing trades, this adds risk regardless of direction.
 
 ---
 
 ### Q30: Low Float Risk
+- Fields: Float Shares
 - Category: Risk Penalty
 - Max: 0 / Min: -1
 - Logic: Low float stocks have amplified price swings on normal volume.
@@ -470,6 +471,7 @@ If **Q23 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 ---
 
 ### Q31: Sector Performance vs Peers
+- Fields: 1-Month Price Change %, Sector Average 1-Month Return %
 - Category: Momentum
 - Max: +1 / Min: -1
 - Logic: Compare stock's 1M return vs its sector average 1M return.
@@ -485,7 +487,7 @@ If **Q23 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 ## Final Score Calculation
 - **Raw Score** = Sum of assigned points from all questions
-**Current Config Reference (V13):**
+**Current Config Reference:**
 - **Max Raw Score:** 71 points
 - **Min Raw Score:** -42 points
 - **Span:** 113 points
@@ -493,20 +495,10 @@ If **Q23 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 `((Raw Score - Min) / (Max - Min)) × 100`
 *Current equivalent:* `((Raw Score + 42) / 113) × 100`
 
----
-
-## V11 Performance (Backtest Results)
-
-| Score | Count | Win Rate | Avg 1M Return |
-|-----------|-------|----------|---------------|
-| 70+ | 7 | **86%** | +9.2% |
-| 60-70 | 56 | 59% | +6.1% |
-| 50-60 | 113 | 60% | +4.5% |
-| <50 | 48 | 42% | +0.0% |
-
-*Based on 224 stock-date observations across 6 dates (July 9, Aug 6, Nov 3, Dec 1, Dec 9, 2025). Excluded: Crypto and Pharma/Biotech sectors.*
 
 ---
 
 **End of Stock Analysis Test Instructions**
+
+---
 
