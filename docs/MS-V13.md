@@ -9,9 +9,26 @@ Through optimizatin and direct comparison we find the best one for best situatio
 Display different MS formulas in the result sections for comparison and trading use.
 Below are the ways the MS can be used.
 
+## 1. MS Standard
 
+```
+MS = (MC + 3 × SA) / 4
+```
 
+- **Purpose:** SA-weighted quality score. Higher = better overall stock + market combination.
+- **Rounded** to whole number.
 
+### MS Standard Signals
+
+| MS Range | Signal |
+|----------|--------|
+| ≥ 70 | BUY |
+| 60-69 | LEAN BUY |
+| 50-59 | HOLD |
+| 40-49 | LEAN SELL |
+| < 40 | SELL |
+
+---
 
 ## 2. MS Contrarian
 
@@ -35,7 +52,7 @@ MS = SA + 0.75 × (100 - MC)
 
 ---
 
-## 2. ENTRY RULES (Zone Table)
+## 3. ENTRY RULES (Zone Table)
 
 Evaluate in priority order. Stop at first match.
 
@@ -54,7 +71,7 @@ Evaluate in priority order. Stop at first match.
 
 ---
 
-## 3. EXIT RULES
+## 4. EXIT RULES
 
 Evaluate in priority order. Stop at first match.
 
@@ -69,7 +86,7 @@ Evaluate in priority order. Stop at first match.
 
 ---
 
-## 4. POSITION SIZING
+## 5. POSITION SIZING
 
 ### Tier Limits (Max Position per Stock)
 
@@ -93,7 +110,7 @@ Evaluate in priority order. Stop at first match.
 
 ---
 
-## 5. MS DECISION FLOW
+## MS DECISION FLOW
 
 ```
 START
@@ -117,11 +134,5 @@ START
 
 ---
 
-## MS Modifiers
-| Condition | Modifier | Applies To |
-|-----------|----------|------------|
-| SA Q23 = Breakout AND MC < 60 | -3 | All formulas |
-
----
 
 **End of Master Score V12**
