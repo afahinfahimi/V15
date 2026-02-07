@@ -21,6 +21,23 @@ Amplification multiplies each series' deviation from the price midpoint: amplifi
 
 This scaling ensures all indicators visually overlay on the price, making crossovers and divergences between score trends and price movements immediately visible.
 
+### Notes to undrestand scaling
+Scaling — Simple Explanation
+The chart needs to show things with different units (dollars, scores, VIX level) on the same chart. So it picks the stock price as the "ruler" and maps everything else onto it.
+Formula: scaledValue = minPrice + (value / 100) × priceRange
+
+minPrice — lowest stock price on screen (the bottom of the chart)
+priceRange — the gap between the highest and lowest price on screen
+value — any 0–100 number (SA score, MC score, or inverted VIX)
+scaledValue — where that number gets placed on the chart, expressed in dollars so it lines up with price
+
+VIX inversion: VIX is flipped (100 - VIX) before scaling so that "bad" (high VIX) appears low on the chart and "good" (low VIX) appears high — matching the direction of price.
+Amplification: Exaggerates how far a line sits from the middle of the chart. Makes small score changes easier to see. Does not change the data, only the visual.
+
+Your Claim: When you tuned amplification on VIX and price, the two lines crossed at what turned out to be perfect buy/sell points.
+The Question: Is this a real tradeable signal, or did the specific amplify settings just happen to make the lines cross at the right moments?
+The Test: Strip away all scaling and amplification. Calculate a raw number: (100 - VIX) minus (price's position as a 0–100 percentile in its own range). When this number crosses zero, that's a crossover without any visual tuning. Then check: do those zero-crossings consistently land near reversals across multiple stocks and multiple time periods? If yes — real signal. If it only works on one stock with one amplify setting — coincidence.
+
 ---
 
 **Accent Colors:**
