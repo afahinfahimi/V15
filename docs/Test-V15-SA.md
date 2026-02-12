@@ -36,8 +36,8 @@
 | 4 | Annual 20-49% AND Quarterly > 0 but ≤ Annual | Steady Strong |
 | 2 | Annual 1-19% AND Quarterly > 0 | Growing |
 | 1 | Annual ≥0 AND Quarterly ≤ 0 | Stalling |
-| 1 | Annual < 0 AND Quarterly > 0 | Recovering |
-| 0 | Annual < 0 AND Quarterly ≤ 0 | Declining |
+| 1 | Annual <0 AND Quarterly > 0 | Recovering |
+| 0 | Annual <0 AND Quarterly ≤ 0 | Declining |
 
 **Q2: Operating Income Growth**
 - Fields: Annual Operating Income Growth %, Quarterly Operating Income Growth % (YoY)
@@ -52,8 +52,8 @@
 | 4 | Annual 20-49% AND Quarterly > 0 but ≤ Annual | Steady Strong |
 | 2 | Annual 1-19% AND Quarterly > 0 | Growing |
 | 1 | Annual ≥0 AND Quarterly ≤ 0 | Stalling |
-| 1 | Annual < 0 AND Quarterly > 0 | Recovering |
-| 0 | Annual < 0 AND Quarterly ≤ 0 | Declining |
+| 1 | Annual <0 AND Quarterly > 0 | Recovering |
+| 0 | Annual <0 AND Quarterly ≤ 0 | Declining |
 
 **Q3: Cash Flow Growth**
 - Fields: Annual Operating Cash Flow Growth %, Quarterly Operating Cash Flow Growth % (YoY)
@@ -68,8 +68,8 @@
 | 4 | Annual 20-49% AND Quarterly > 0 but ≤ Annual | Steady Strong |
 | 2 | Annual 1-19% AND Quarterly > 0 | Growing |
 | 1 | Annual ≥0 AND Quarterly ≤ 0 | Stalling |
-| 1 | Annual < 0 AND Quarterly > 0 | Recovering |
-| 0 | Annual < 0 AND Quarterly ≤ 0 | Declining |
+| 1 | Annual <0 AND Quarterly > 0 | Recovering |
+| 0 | Annual <0 AND Quarterly ≤ 0 | Declining |
 
 ### Cyclical Sector Cap
 
@@ -195,7 +195,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 ---
 
-### Weighted Momentum ⭐ BEST PREDICTOR
+### Weighted Momentum
 
 **Q11: Momentum Magnitude**
 - Field: 52-Week Price Change %, 3-Month Price Change %
@@ -258,18 +258,16 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 ### Country 
 
-**Q15: Country** ✏️ UPDATED V15
+**Q15: Country** 
 - Field: Country (from FMP `/api/v3/profile/{symbol}`)
 - Max Points: 1
 - Min Point: -2
 
 | Tier | Countries | Points |
 |------|-----------|--------|
-| USA | US-listed domestic companies | 0 |
-| Developed | Canada, UK, Netherlands, Germany, France, Japan, Australia, Taiwan, South Korea, Switzerland, Ireland, Israel | +1 |
+| USA | US-listed domestic companies | +1 |
+| Developed | Canada, UK, Netherlands, Germany, France, Japan, Australia, Taiwan, South Korea, Switzerland, Ireland, Israel | 0 |
 | China / Emerging Markets | China, Brazil, South Africa, and other EM countries | -2 |
-
-> **V15 Change:** USA reduced from +2 to 0. USA bonus was counterproductive (r=-0.190 vs returns). Removing it improved SA correlation from r=0.152 to r=0.162 (+7%).
 
 ---
 
@@ -388,16 +386,19 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 ---
 
-**Q24: Biotech Binary Event Burn** — Max: 0 / Min: -3
+**Q24: Biotech Binary Event Burn** 
+— Max Points: 0 
+- Min Points: -3
 - Fields: Sector, 10-Day Price Change %
-- Applies to: Healthcare (Biotech, Medical Devices, Drug Manufacturers)
+- Applies to: Medical, Pharma 
 - Trigger: 10D > 15% → Deduct -3 points
 
 ---
 
 ### Q25: Sustained Downtrend
 - Fields: 1-Day Price Change %, 5-Day Price Change %, 1-Month Price Change %
-- **Max:** 0 / **Min:** -3
+— Max Points: 0 
+- Min Points: -3
 - **Logic:** Check 1D, 5D, and 1M price changes. If ALL THREE are negative, deduct -3 points.
 - **Conditions:**
   - 1D < 0% AND 5D < 0% AND 1M < 0%: **-3**
@@ -408,7 +409,8 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 ### Q26: Sudden Drop / Slide
 - Fields: Historical Daily Close Prices (last 5 trading days)
 - **Category:** Risk Penalty
-- **Max:** 0 / **Min:** -6
+— Max Points: 0 
+- Min Points: -6
 - **Logic:** Check for abnormal price drops. Evaluate each of the last 3 trading days individually (close-to-close). Also check cumulative 5-day return. Triggered by the HIGHEST matching tier only (no stacking):
 
   | Tier | Condition | Penalty |
@@ -427,7 +429,8 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 ### Q27: Short Interest Risk
 - Fields: Short % of Float
 - Category: Risk Penalty
-- Max: 0 / Min: -1
+— Max Points: 0 
+- Min Points: -1
 - Logic: High short interest amplifies volatility in both directions.
 
   | Short % Float | Penalty |
@@ -443,7 +446,8 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 ### Q28: Low Float Risk
 - Fields: Float Shares
 - Category: Risk Penalty
-- Max: 0 / Min: -1
+— Max Points: 0 
+- Min Points: -1
 - Logic: Low float stocks have amplified price swings on normal volume.
 
   | Float | Penalty |
@@ -477,7 +481,8 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 - Fields: Stock 5-Day Price Change %, QQQ 5-Day Price Change %
 - Formula: Alpha = Stock 5D % minus QQQ 5D %
 - Category: Momentum
-- Max: +3 / Min: -3
+— Max Points: +3 
+- Min Points: -3
 - **Evaluate in order listed (stop at first match):**
 
   | Condition | Points |
@@ -492,14 +497,13 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 - Data Source: FMP quote (stock 5D change) + QQQ quote (market 5D change)
 - Rationale: Stock move relative to market isolates stock-specific strength (alpha). Stocks up while market is down had 82.1% win rate. Stocks down while market is up had 47.8% win rate. Combined with Q15 change, improved SA correlation from r=0.152 to r=0.173 (+14%).
 
-> **V15 Change:** New question. Alpha (stock vs market) is a strong predictor not captured by existing momentum questions (Q5, Q6, Q11 measure raw moves, not relative moves).
-
 ---
 
-### Q31: Trend Deterioration (Lower Lows & Lower Highs) 🆕 NEW V15 ⏳ UNTESTED
+### Q31: Trend Deterioration (Lower Lows & Lower Highs)
 - Fields: Daily OHLC (last 30 trading days)
 - Category: Risk Penalty
-- Max: 0 / Min: -3 (TBD)
+— Max Points: 0 
+- Min Points: -3
 
 **Calculation:**
 1. Find swing highs: days where the high > highs of 2 days before and 2 days after
@@ -510,13 +514,11 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
   | Condition | Points |
   |-----------|--------|
-  | Lower highs AND lower lows (2+ swing points each) | -3 (TBD) |
+  | Lower highs AND lower lows (2+ swing points each) | -3 |
   | Otherwise | 0 |
 
 - Data Source: FMP `/api/v3/historical-price-full/{symbol}` (daily OHLC)
 - Rationale: Stocks making lower lows and lower highs are in a structural downtrend regardless of other indicators. Detects topping patterns that momentum questions miss.
-
-> **V15 Change:** New question. Not yet validated against backtest data. Points TBD pending testing.
 
 ---
 
@@ -532,17 +534,6 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 `((Raw Score - Min) / (Max - Min)) × 100`
 *Current equivalent:* `((Raw Score + 42) / 112) * 100`
 
----
-
-## V15 Changelog Summary
-
-| Change | Question | What Changed | Evidence |
-|--------|----------|-------------|----------|
-| Removed | Old Q15 | Options Available removed | Low predictive value |
-| Updated | Q15 Country | USA: +2 → 0 | r: 0.152 → 0.162 (+7%) |
-| New | Q30 | 5-Day Relative Strength (Alpha) | r: 0.162 → 0.173 (+7%) |
-| New | Q31 | Trend Deterioration | ⏳ Untested |
-| — | Combined | Q15 + Q30 | r: 0.152 → 0.173 (+14%) |
 
 ---
 
