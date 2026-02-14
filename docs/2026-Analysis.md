@@ -534,9 +534,54 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 `((Raw Score - Min) / (Max - Min)) × 100`
 *Current equivalent:* `((Raw Score + 42) / 112) * 100`
 
+---
+
+## Analysis Color Code
+
+Use the table to apply colors to text, icons, background, 
+borders and shapes that represent Analysis scores.
+
+| Score | Color | 
+|-------|-------|
+| 80 to 99 | t-green | 
+| 70 to 79 | t-teal | 
+| 60 to 69 | t-yellow | 
+| 50 to 59 | t-orange |  
+| 40 to 49 | t-red |  
+| < 40 | a-red |  
+
+
+
+
+
 
 ---
 
 **End of Stock Analysis Test Instructions**
 
----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
