@@ -2,8 +2,6 @@
 
 **Lovable Trade V16 - Updated 2/13/2026**
 
----
-
 ## Stock Analysis (SA) Score Overview
 
 - Score each stock provided by the user (via CSV or direct entry).
@@ -610,7 +608,6 @@ Clicking on an alert, opens a toggle box with the content of Alert below.
 ---
 
 **End of Alerts Instructions**
-
 
 
 
