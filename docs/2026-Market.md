@@ -329,6 +329,17 @@ The app must calculate these values using the API data:
 
 ---
 
+### Market Score Color Codes
+
+| Score | Color | Meaning |
+|-------|-------|---------|
+| ≥ 70 | t-teal | Strong with Risk of reversal |
+| 55 to 70 | t-green | Strong (possible overextenssion)
+| 30 to 54 | t-blue | Healthy Market |
+| 10 to 29 | t-yellow | Weak Market |
+| < 10 | t-red | Very Weak Market
+
+
 **End of Market Condition Test**
 
 
