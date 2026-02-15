@@ -6,15 +6,16 @@
 - This module considers all available results and information and issues Action Signals
 - Analysis and Market Scores as well as VIX are needed before the Signals are determined and issued.
 - Follow the phases below to determine the final signal to be issued
+- Each phase/condition has defenition of the condition, Signals about actions to take, and how to manage your current holdings.
 
 ## PHASE 1: VIX Override 
 
 If VIX is over 25, that overrides everything else. Take actions below.
 
-| Condition | Signal | Color | 
-|-----------|--------|-------|
-| VIX ≥ 30 | Deploy 95% capital. AS 75+ stocks first, fill remainder with QQQ. | t-green | 
-| VIX ≥ 25 | Deploy 80% capital. AS 75+ stocks first, fill remainder with QQQ. | t-green |
+| VIX Condition | MS Condition | AS Condition | Signal Title | Signal Details | Manage Holdings | Cash % | Color | 
+|---------------|--------------|--------------|--------------|----------------|-----------------|--------|-------|
+| VIX ≥ 30 | Any | > 65 | Aggressive Buy | Combine 80% Stocks + 20% QQQ | Keep holdings + Add | 5% Cash | t-green | 
+| VIX ≥ 25 | Any | > 65 | Combine 70% Stocks + 30% QQQ | Keep holdings + Add | 20% Cash | t-green |
 
 ---
 
@@ -22,19 +23,19 @@ If VIX is over 25, that overrides everything else. Take actions below.
 
 The second group of overrides is based on Market Scores below. They trigger after VIX is checked and it is under 25.
 
-| Condition | Signal | Color | 
-|-----------|--------|-------|
-| VIX is < 25 and MS < 10 | Market is very weak. Sell everything. Ignore AS. | t-red |
-| VIX is < 25 and MS ≥ 80 | No new buys. Set 5% stop loss orders on all holdings. | t-yellow |
+| VIX Condition | MS Condition | AS Condition | Signal Title | Signal Details | Manage Holdings | Cash % | Color | 
+|---------------|--------------|--------------|--------------|----------------|-----------------|--------|-------|
+| < 25 | < 10 | Any | Weak Market | Sell everything. Ignore AS. | Consider selling most, especially if over invested | 90% |  t-red |
+| < 25 | ≥ 80 | Any | No New Buys | Market seems over heated | Set 5% stop loss orders on all. Trim if under 50% cash | 50% | t-yellow |
 
 ---
 
-## PHASE 3: When to buy
+## PHASE 3: Buy conditions
 
 If no override triggered, look for the combination of Market and Analysis Scores below
 
-| Market Score | Analysis Score | Signals | Color | 
-|-----------|---------------|--------|-------|----------|
+| Condition | Signal Title | Signal Details | Manage Holdings | Color | 
+|-----------|--------------|----------------|--------------------|-------|
 | 10 to 30 | AS ≥ 75 | Buy stocks with 75+ scores | t-green | 
 | 30 to 55 | AS ≥ 65 | Buy stocks with at least a AS of 65 | t-green |
 | 55 to 70 | AS ≥ 65 | Selective Buys. Avoid overextended stocks. Stop Loss on holsings. | t-teal | 
@@ -42,21 +43,10 @@ If no override triggered, look for the combination of Market and Analysis Scores
 
 ---
 
-## PHASE 4: WHAT TO BUY
-
-When a BUY signal triggers, rank and select stocks.
-
-### Stock Selection Priority
-
-1. **Sort by SA Score descending.** Highest SA first.
-2. **Apply minimum SA threshold** per MC zone (75 in Fear, 65 in Normal).
-3. **Sector diversification:** No more than 2 positions in the same sector.
-4. **Avoid:** SA < 55 stocks regardless of any other signal.
-
 ### Position Sizing
 
-| Condition | Allocation per Stock | Max Positions | Color |
-|-----------|---------------------|---------------|-------|
+| Condition | Signal Title | Signal Details | Manage Holdings | Color | 
+|-----------|--------------|----------------|--------------------|-------|
 | VIX Override (≥ 30) | Equal weight across SA 75+ stocks, fill rest in QQQ | 95% total deployed | B1 |
 | VIX Override (≥ 25) | Equal weight across SA 75+ stocks, fill rest in QQQ | 80% total deployed | B1 |
 | Fear Buy (MC 10–30) | Equal weight | Up to 5 stocks | B1 |
@@ -64,13 +54,9 @@ When a BUY signal triggers, rank and select stocks.
 
 ---
 
-## PHASE 5: HOW TO HOLD
+## PHASE 5: Holding Rules
 
-Re-score all held positions weekly. Current SA score determines stop level.
-
-### Weekly Portfolio Re-Score Rules
-
-| Current SA | Stop Type | Action | Color |
+| Current AS | Stop Type | Action | Holding Management | Color |
 |------------|-----------|--------|-------|
 | ≥ 75 | None | **Hold with conviction.** No stop needed. | H1 |
 | 65–75 | 10% trailing stop | **Hold with caution.** Set or adjust 10% trailing stop from recent high. | H2 |
