@@ -5,18 +5,40 @@
 ## Signals Overview
 - This module considers all available results and information and issues Action Signals.
 - Analysis (SA) and Market (MC) Scores as well as VIX are needed before the Signals are determined and issued.
-- Follow the phases below to determine the final signal.
+- Follow the phases below to determine the final signal. There is Market Signal and there is individual Stock Signals.
 - Each phase describes a combination of conditions and how they are translates to Action Signals for new trades and managing existing positions.
 
-## PHASE 1: VIX Override 
+## Market Condition
+Market in general can be in two category of conditions. Normal Market and Override Mode.
+The Override Mode is when VIX or MC are at a specific level that cancelled out the effect of other scores.
+Then Normal Market is when market is active and Signals are determined based on calculations and relationdhip of different scores to eachother.
 
-If VIX is over 25, that overrides everything else. Take actions below.
+### Market Condition Categories
+1. VIX Override. When VIX is over 25, market is in a panic mode and fear is at its highest which means it is a great buying opportunity. 
+3. MC Override. If VIX is under 25, then there are two MC scores that cancells out all other scores. That is MC under 10 which means market is too weak to do anything. And MC over 80, which means the market is overheated.
+4. SA Override. This is a situation that applies to single stocks. That is when the SA of a stock is under 55, that is a sell signal regardless of other scores.
+5. Regular market. All other combination of scores trigger different signals that are explained below.
+6. While Override modes usually means moving in a specific direction, different situations of other scores may determine the details of moving toward a 'Se;;' or 'Buy' signal.
 
-| VIX Condition | MC Scores | SA Scores | Signal Title | Signal Details | Manage Holdings | Cash at Hand | Color | 
+
+
+## CONDITION 1: VIX Override 
+
+MARKET SIGNAL
+| VIX Condition | MC Score | Market Signal | Market signal Details | Cash at Hand | Color |
+|---------------|----------|---------------|-----------------------|--------------|-------|
+| VIX ≥ 30 | Any | Aggressive Buy | Fear is maximized, great buying opportunity | 5% | a-green |
+| VIX 25 to 29 | Any | Buy | Market panic, include QQQ positions | 20% | t-green |
+
+
+STOCK SIGNALS
+| VIX | MC | SA | Stock Signals | Manage Holdings | Color | 
 |---------------|--------------|--------------|--------------|----------------|-----------------|--------|-------|
-| VIX ≥ 30 | Any | >= 65 | Aggressive 65+ Buy | Combine 80% Stocks + 20% QQQ | Keep holdings + Add | 5% | t-green | 
-| VIX ≥ 25 | Any | >= 65 | Buy 65+ | Combine 70% Stocks + 30% QQQ | Keep holdings + Add | 20%  | t-green |
-| VIX ≥ 25 | Any | < 65 | Find 65+ Alternatives | Good buying opportunity for better stocks | Sell below 65 and buy better quality or buy QQQ | 20% | t-teal |
+| VIX ≥ 30 | Any | >= 65 | Aggressive Buy | Hold + Add | t-green | 
+| VIX ≥ 25 | Any | >= 65 | Buy 65+ | Combine 70% Stocks + 30% QQQ | Hold + Add | t-green |
+| VIX ≥ 25 | Any | < 65 | Find Alternatives | Add 10% trailing stop loss | t-teal |
+| VIX ≥ 25 | Any | 55 TO 65 | Monitor for improvement | Consider Selling. Tight Stop loss | t-yellow |
+| VIX ≥ 25 | Any | < 55 | Find Alternatives | Replace with alternatives | t-teal |
 
 ---
 
