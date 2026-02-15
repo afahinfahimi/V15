@@ -83,4 +83,37 @@ STOCK SIGNALS
 
 ---
 
+## Tiers
+Tiers defined the max position size per stock
+**Tier Precedence:** If a stock qualifies for multiple tiers, assign the highest tier.
+**Note:** Tiers are risk caps, not quality rankings. Score determines quality; tier determines maximum position size based on risk profile.
+### Portfolio Concentration Limits
+
+| Tier | SA | Condition | Max Position | Color |
+|------|----|-----------|--------------|-------|
+| T1 | ≥ 55 | Profitable + Market Cap > $50B | $100,000 | t-green |
+| T2 | ≥ 50 | Profitable + Market Cap > $2B | $50,000 | t-blue |
+| T3 | ≥ 50 | Market Cap > $100M + (growth OR small profitable) | $20,000 | t-yellow |
+| SELL | Does not qualify for any tier | $0 — Do not buy | t-red |
+
+---
+
 **End of Signals Instructions**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
