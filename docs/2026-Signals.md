@@ -1,28 +1,18 @@
 # Module3 - Signals
-
 **Lovable Trade V16 — Updated 2/13/2026**
 
-## Signals Overview
+## Signals 
 - This module considers all available results and information and issues Action Signals.
 - Analysis (SA) and Market (MC) Scores as well as VIX are needed before the Signals are determined and issued.
-- Follow the phases below to determine the final signal. There is Market Signal and there is individual Stock Signals.
-- Each phase describes a combination of conditions and how they are translates to Action Signals for new trades and managing existing positions.
 
-## Market Condition
-Market in general can be in two category of conditions. Normal Market and Override Mode.
+## Market Conditions
+There are two conditions a market is in. Normal Market and Override Mode.
 The Override Mode is when VIX or MC are at a specific level that cancelled out the effect of other scores.
 Then Normal Market is when market is active and Signals are determined based on calculations and relationdhip of different scores to eachother.
-
-### Market Condition Categories
-1. VIX Override. When VIX is over 25, market is in a panic mode and fear is at its highest which means it is a great buying opportunity. 
-3. MC Override. If VIX is under 25, then there are two MC scores that cancells out all other scores. That is MC under 10 which means market is too weak to do anything. And MC over 80, which means the market is overheated.
-4. SA Override. This is a situation that applies to single stocks. That is when the SA of a stock is under 55, that is a sell signal regardless of other scores.
-5. Regular market. All other combination of scores trigger different signals that are explained below.
-6. While Override modes usually means moving in a specific direction, different situations of other scores may determine the details of moving toward a 'Se;;' or 'Buy' signal.
+Below you see the three conditions possible with two group of signals for each. One for the whole market and one for individual stocks considering their scores within that market condition.
 
 
-
-## CONDITION 1: VIX Override 
+### CONDITION 1: VIX Override 
 
 MARKET SIGNALS
 | VIX Condition | MC Score | Market Signal | Market signal Details | Cash at Hand | Color |
@@ -41,9 +31,7 @@ STOCK SIGNALS
 
 ---
 
-## CONDITION 2: Market Score Override
-
-The second group of overrides is based on Market Scores below. They trigger after VIX is checked and it is under 25.
+### CONDITION 2: Market Score Override
 
 MARKET SIGNALS
 | VIX | MC | Signal Title | Signal Details | Cash at Hand | Color | 
@@ -62,9 +50,7 @@ STOCK SIGNALS
 
 ---
 
-## CONDITION 3: Regular Market
-
-If no override triggered, look for the combination of Market and Analysis Scores below
+### CONDITION 3: Regular Market
 
 MARKET SIGNALS
 | VIX | MC | Signal Title | Signal Details | Cash at Hand | Color | 
