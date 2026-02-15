@@ -26,7 +26,7 @@
 **Q1: Sales Growth**
 - Fields: Annual Revenue Growth %, Quarterly Revenue Growth % (YoY)
 - Max Points: 6
-- Min Point: 0
+- Min Points: 0
 
 | Points | Condition | Interpretation |
 |--------|-----------|----------------|
@@ -42,7 +42,7 @@
 **Q2: Operating Income Growth**
 - Fields: Annual Operating Income Growth %, Quarterly Operating Income Growth % (YoY)
 - Max Points: 6
-- Min Point: 0
+- Min Points: 0
 
 | Points | Condition | Interpretation |
 |--------|-----------|----------------|
@@ -58,7 +58,7 @@
 **Q3: Cash Flow Growth**
 - Fields: Annual Operating Cash Flow Growth %, Quarterly Operating Cash Flow Growth % (YoY)
 - Max Points: 6
-- Min Point: 0
+- Min Points: 0
 
 | Points | Condition | Interpretation |
 |--------|-----------|----------------|
@@ -88,7 +88,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 - Field: Net Profit Margin
 - `Net Profit Margin` = Net Income ÷ Revenue (TTM).
 - Max Points: 5
-- Min Point: 0
+- Min Points: 0
 
 | Condition | Points | Interpretation |
 |-----------|--------|----------------|
@@ -106,7 +106,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q5: 1-Month Price Change**
 - Field: 1-Month Price Change %
 - Max Points: 4
-- Min Point: 0
+- Min Points: 0
 
 | Change | Points |
 |--------|--------|
@@ -119,7 +119,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q6: 10-Day Price Change**
 - Field: 10-Day Price Change %
 - Max Points: 3
-- Min Point: 0
+- Min Points: 0
 
 | Change | Points |
 |--------|--------|
@@ -135,7 +135,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q7: 20-Day Average Volume**
 - Field: 20-Day Average Volume
 - Max Points: 3
-- Min Point: 0
+- Min Points: 0
 
 | Volume | Points |
 |--------|--------|
@@ -152,7 +152,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 - Field: Number of Analyst Ratings, Institutional Ownership %
 - Conditional Points
 - Max Points: 2
-- Min Point: 0
+- Min Points: 0
 
 | Condition | Points |
 |-----------|--------|
@@ -166,7 +166,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q9: Price vs Moving Averages**
 - Field: Current Price, 20-Day SMA, 50-Day SMA
 - Max Points: 4
-- Min Point: 0
+- Min Points: 0
 
 | Position | Points |
 |----------|--------|
@@ -182,7 +182,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q10: Debt-to-Equity Ratio**
 - Field: Total Debt / Total Equity (Most Recent Quarter)
 - Max Points: 3
-- Min Point: -3
+- Min Points: -3
 - **Evaluate in order listed (stop at first match):**
 
 | D/E Ratio | Points |
@@ -201,7 +201,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 - Field: 52-Week Price Change %, 3-Month Price Change %
 - Formula: 52W %Chg + 3M %Chg
 - Max Points: 3
-- Min Point: 0
+- Min Points: 0
 
 | Sum | Points | Backtest Win Rate |
 |-----|--------|-------------------|
@@ -217,7 +217,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q12: EPS Growth Prior Year**
 - Field: EPS Growth % (Prior Fiscal Year)
 - Max Points: 4
-- Min Point: 0
+- Min Points: 0
 
 | Growth | Points |
 |--------|--------|
@@ -234,7 +234,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q13: Return on Equity (ROE)**
 - Field: Return on Equity (TTM)
 - Max Points: 2
-- Min Point: 0
+- Min Points: 0
 
 | ROE | Points |
 |-----|--------|
@@ -245,7 +245,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q14: Return on Assets (ROA)**
 - Field: Return on Assets (TTM)
 - Max Points: 3
-- Min Point: 0
+- Min Points: 0
 
 | ROA | Points |
 |-----|--------|
@@ -261,7 +261,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q15: Country** 
 - Field: Country (from FMP `/api/v3/profile/{symbol}`)
 - Max Points: 1
-- Min Point: -2
+- Min Points: -2
 
 | Tier | Countries | Points |
 |------|-----------|--------|
@@ -276,7 +276,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q16: Cash Burn Risk**
 - Fields: Net Profit Margin, Operating Cash Flow (Quarterly), Market Cap
 - Max Points: 0
-- Min Point: -3
+- Min Points: -3
 
 | Condition | Points |
 |-----------|--------|
@@ -290,7 +290,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q17: Deterioration Risk**
 - Fields: Quarterly Revenue, Quarterly Operating Income, Quarterly Operating Cash Flow (vs Same Qtr Year Ago)
 - Max Points: 0
-- Min Point: -3
+- Min Points: -3
 - Trigger: Quarterly Revenue < Sales(q-4) AND Quarterly Operating Income < OpIncome(q-4) AND Quarterly Operating Cash Flow < CashFlow(q-4)
 - Points: -3
 
@@ -303,7 +303,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q18: Financial Strength**
 - Fields: Net Profit Margin, Return on Equity, Debt/Equity Ratio
 - Max Points: 3
-- Min Point: 0
+- Min Points: 0
 
 | Condition | Points |
 |-----------|--------|
@@ -319,20 +319,20 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q19: Momentum Divergence Penalty**
 - Fields: 52-Week Price Change %, 3-Month Price Change %, 1-Month Price Change %, 10-Day Price Change %
 - Max Points: 0
-- Min Point: -3
+- Min Points: -3
 - Trigger: 52-Week Price Change % > 0% AND 3-Month Price Change % < 0% AND 1-Month Price Change % < 0% AND 10-Day Price Change % < 0%
 - Points: -3
 
 **Q20: Sector Preference**
 - Field: Sector (GICS)
 - Max Points: 2
-- Min Point: -4
+- Min Points: -4
 
 | Sector | Points |
 |--------|--------|
 | Computers and Technology, Finance, Business Services, Aerospace, Defence | +2 |
 | Consumer Staples, Consumer Discretionary, Auto-Tires-Trucks, Retail-Wholesale, Medical, Industrial Products, Transportation, Utilities, Construction | +1 |
-| Oils-Energy, Basic Materials, Gold/Mining, Pharma | 0 |
+| Energy, Basic Materials, Mining, Pharma | 0 |
 | Crypto-related (Bitcoin miners, crypto exchanges, blockchain companies) | -4 |
 
 **Sector Classification Notes:**
@@ -346,7 +346,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q21: %B Position (Bollinger Bands — Momentum)**
 - Field: Bollinger Bands %B (Period 20, StdDev 2)
 - Max Points: 4
-- Min Point: 0
+- Min Points: 0
 
 | Position | Points |
 |----------|--------|
@@ -363,7 +363,7 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q22: Momentum Quality**
 - Fields: 52-Week %Chg, 3-Month %Chg, 1-Month %Chg, 10-Day %Chg
 - Max Points: 2
-- Min Point: -1
+- Min Points: -1
 - **Evaluate in order listed (stop at first match):**
 
 | Pattern | Condition | Points |
@@ -380,14 +380,14 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 **Q23: High P/E Momentum Trap**
 - Fields: P/E Ratio (TTM), 10-Day Price Change %
 - Max Points: 0
-- Min Point: -4
+- Min Points: -4
 - Trigger: P/E Ratio (TTM) > 50 AND 10-Day Price Change < -5%
 - Points: -4
 
 ---
 
 **Q24: Biotech Binary Event Burn** 
-— Max Points: 0 
+- Max Points: 0 
 - Min Points: -3
 - Fields: Sector, 10-Day Price Change %
 - Applies to: Medical, Pharma 
@@ -395,9 +395,9 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 ---
 
-### Q25: Sustained Downtrend
+**Q25: Sustained Downtrend**
 - Fields: 1-Day Price Change %, 5-Day Price Change %, 1-Month Price Change %
-— Max Points: 0 
+- Max Points: 0 
 - Min Points: -3
 - **Logic:** Check 1D, 5D, and 1M price changes. If ALL THREE are negative, deduct -3 points.
 - **Conditions:**
@@ -406,10 +406,10 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 ---
 
-### Q26: Sudden Drop / Slide
+**Q26: Sudden Drop / Slide**
 - Fields: Historical Daily Close Prices (last 5 trading days)
 - **Category:** Risk Penalty
-— Max Points: 0 
+- Max Points: 0 
 - Min Points: -6
 - **Logic:** Check for abnormal price drops. Evaluate each of the last 3 trading days individually (close-to-close). Also check cumulative 5-day return. Triggered by the HIGHEST matching tier only (no stacking):
 
@@ -426,10 +426,10 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 ---
 
-### Q27: Short Interest Risk
+**Q27: Short Interest Risk**
 - Fields: Short % of Float
 - Category: Risk Penalty
-— Max Points: 0 
+- Max Points: 0 
 - Min Points: -1
 - Logic: High short interest amplifies volatility in both directions.
 
@@ -443,10 +443,10 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 ---
 
-### Q28: Low Float Risk
+**Q28: Low Float Risk**
 - Fields: Float Shares
 - Category: Risk Penalty
-— Max Points: 0 
+- Max Points: 0 
 - Min Points: -1
 - Logic: Low float stocks have amplified price swings on normal volume.
 
@@ -460,10 +460,11 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 ---
 
-### Q29: Sector Performance vs Peers
+**Q29: Sector Performance vs Peers**
 - Fields: 1-Month Price Change %, Sector Average 1-Month Return %
 - Category: Momentum
-- Max: +1 / Min: -1
+- Max Points: +1 
+- Min Points: -1
 - Logic: Compare stock's 1M return vs its sector average 1M return.
 
   | Condition | Points |
@@ -477,11 +478,11 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 ---
 
-### Q30: 5-Day Relative Strength (Alpha) 🆕 NEW V15
+**Q30: 5-Day Relative Strength (Alpha)**
 - Fields: Stock 5-Day Price Change %, QQQ 5-Day Price Change %
 - Formula: Alpha = Stock 5D % minus QQQ 5D %
 - Category: Momentum
-— Max Points: +3 
+- Max Points: +3 
 - Min Points: -3
 - **Evaluate in order listed (stop at first match):**
 
@@ -499,10 +500,10 @@ If **Q21 (Range Position)** equals **"Breakout"** (Score 4), the cap is lifted, 
 
 ---
 
-### Q31: Trend Deterioration (Lower Lows & Lower Highs)
+**Q31: Trend Deterioration (Lower Lows & Lower Highs)**
 - Fields: Daily OHLC (last 30 trading days)
 - Category: Risk Penalty
-— Max Points: 0 
+- Max Points: 0 
 - Min Points: -3
 
 **Calculation:**
@@ -580,7 +581,7 @@ Clicking on an alert, opens a toggle box with the content of Alert below.
 |-------|---------|
 | SEC Investigation | Active SEC investigation, fraud, restatement |
 | Legal Issues | Lawsuit, hearing, investigation, ruling news about the company or top executives |
-| Forward Guidence Shows Decline | Forward guidance lowered by the company |
+| Forward Guidance Shows Decline | Forward guidance lowered by the company |
 | EPS Expectation Lowered | Consensus EPS estimates cut within the last 90 days |
 | Downgraded by Analysts | Analyst downgraded the stock within the last 30 days |
 | Insider Selling | Top insider's selling within the last 6 months |
@@ -591,8 +592,8 @@ Clicking on an alert, opens a toggle box with the content of Alert below.
 
 | Alert | Trigger |
 |-------|---------|
-| Earning Date Close | Earnings date is within the next 14 days |
-| IPO (New Company) | Companies IPO was Listed within the last 12 months |
+| Earnings Date Close | Earnings date is within the next 14 days |
+| IPO (New Company) | Company's IPO was Listed within the last 12 months |
 
 
 #### Green Alerts (Positive / Opportunity)
