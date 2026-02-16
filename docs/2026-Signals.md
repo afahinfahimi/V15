@@ -1,5 +1,5 @@
 # Module 3 — Signals
-**Lovable Trade V16 — Updated 2/15/2026**
+**Lovable Trade V17 — Updated 2/16/2026**
 
 This module consolidates all color coding, grading, alerts, and action signals in one place.
 Modules 1 (Analysis) and 2 (Market) focus solely on calculating scores. This module interprets them.
