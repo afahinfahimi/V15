@@ -1,5 +1,5 @@
-# Module 3 — Signals
-**Lovable Trade V17 — Updated 2/16/2026**
+# Module-4 — Signals
+**Lovable Trade V16 — Updated 2/15/2026**
 
 This module consolidates all color coding, grading, alerts, and action signals in one place.
 Modules 1 (Analysis) and 2 (Market) focus solely on calculating scores. This module interprets them.
@@ -47,7 +47,7 @@ They help contextualize the Master Signals but do not drive any actions on their
 
 ---
 
-# Part 2 — Alerts (Display Only)
+# Part 2 — Alerts (Display Only) - For Stocks
 
 Alerts are **non-scoring** visual indicators that provide context beyond scores.
 They do not modify scores. They appear in tables, cards, and icons based on instructions.
@@ -88,6 +88,24 @@ Clicking on an alert opens a toggle box with the content of the Alert below.
 | EPS Increased | Consensus EPS estimates raised within the last 90 days |
 | Upgrade by Analysts | Analysts upgraded the stock within the last month |
 | Insider Buying | Top insiders bought stocks within the last 90 days |
+
+---
+
+### Market Level Alerts
+
+In the MC bar results, show an alert for important upcoming events or news headlines that may/have/can affect the market.
+Use the same data sources you use for stock alerts above. The timing for event is when the event is within the next two weeks.
+Search both the API and web search of any reliable financial news source.
+
+These are some examples:
+Consumer Price Index (CPI) [HIGH] (Sat, Jan 10) — Core inflation trending toward 2%
+FOMC Meeting [HIGH] (Wed, Jan 28) — Rate decision expected
+Earnings Season Peak [MEDIUM] (Mid-Jan) — Elevated single-stock volatility
+
+#### How to display
+Show a large alert icon with a vertical separator in front of the 'Signal' and when clicked on it display it as a box added to the MC details panel.
+**Format:** Event Name [HIGH/MEDIUM/LOW] (Date) — One-line description
+
 
 ---
 
