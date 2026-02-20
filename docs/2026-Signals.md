@@ -212,7 +212,7 @@ Signals are determined separately for the **Market** (one result, displayed in t
 | VIX Condition | MC Condition | SA Condition | Signal | Manage Holdings | Color |
 |---------------|--------------|--------------|--------|-----------------|-------|
 | < 25 | 15 to 69 | ≥ 80 | Buy | Hold | t-green |
-| < 25 | 15 to 69 | 70 to 79 | Selective Buy | Hold with 15% trailing stop | t-green |
+| < 25 | 15 to 69 | 70 to 79 | Selective Buy | Hold with 10% trailing stop | t-green |
 | < 25 | 15 to 69 | 60 to 69 | Monitor | Hold with 10% trailing stop | t-yellow |
 | < 25 | 70 to 80 | ≥ 80 | Buy | Hold with 10% trailing stop | t-green |
 | < 25 | 70 to 80 | 70 to 79 | Careful Buy | Hold with 10% trailing stop | t-yellow |
