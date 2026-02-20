@@ -202,6 +202,86 @@ MU, LRCX, KLAC, WDC — **winners every date they appeared.**
 ---
 ---
 
+# Ideas after Master File optimization tests
+
+# SA Backtest — Validated Findings After Data Cleanup
+
+## Solid Kill Zones
+*Statistically significant, 100% bootstrap confidence they underperform peers*
+
+| Signal | Excess Return | Sample | Notes |
+|--------|-------------:|-------:|-------|
+| Q16 = Cash burn risk | -17.6% | 37 | Bulletproof — burning cash + high SA = trap |
+| Q28 = Low float risk | -16.3% | 12 | Small sample but extreme signal |
+| Q8 = "Good volume" only | -11.2% | 51 | No large cap / high volume = danger |
+| Past 5D < -5% | -9.7% | 52 | Catching falling knives doesn't work |
+| Tier 0 | -7.9% | 79 | Consistent underperformer |
+
+These are rare enough that rejecting them costs almost nothing, but they remove the worst losses.
+
+## Moderate Confidence
+*Directionally real but needs more data to confirm size of effect*
+
+| Finding | Detail |
+|---------|--------|
+| SA 80+ beats peers | +2-4% monthly excess. Bootstrap CI: +0.78% to +4.07%. Real alpha, just smaller than raw averages suggest |
+| Q21 "Buy zone" is a trap | -3.4% excess. These are value traps, not opportunities |
+| SA < 70 underperforms peers | Consistent across dates, statistically significant |
+| Past 5D > +15% | -6.6% excess. Buying the top reverses |
+
+## Not Reliable (Do Not Use)
+*Looked good in raw averages but collapsed under scrutiny*
+
+| Finding | Why It Failed |
+|---------|---------------|
+| VIX-based rules | VIX ≥ 25 based on 1 single date. VIX ≥ 20 based on 9 events, dominated by one cluster |
+| MC Score as independent signal | Correlates 0.52 with VIX — partially redundant, not independent |
+| SA 90+ outperformance | Only 26 stocks, confidence interval crosses zero |
+| Combined filters with < 50 observations | Sample too small to trust |
+| Absolute return numbers | Driven by 2025 bull market and stock repetition, not the scoring system |
+| "83% win rate" headline numbers | Disappears when you control for market direction |
+
+## What To Test Next
+
+1. Do the kill zones hold in bear vs bull separately on the cleaned datasets?
+2. Does SA 80+ excess hold in the Old Format data at equivalent score levels?
+3. Does Q16/Q28/Q8 show up in the Barchart data using fundamentals instead of SA scores?
+4. Per-stock bear/bull pairs — does a stock that scores 80+ in bear AND bull outperform in both?
+
+## Key Methodological Notes
+
+- Excess return = stock return minus average return of all stocks on the same date (removes market direction)
+- Bootstrap = 10,000 resamples to build confidence intervals
+- Original dataset had 41 dates over 17 months, top 10 stocks drove 83% of total positive returns
+- After cleanup: 5 clean dates, 492 rows, max 2 appearances per stock
+
+---
+---
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
